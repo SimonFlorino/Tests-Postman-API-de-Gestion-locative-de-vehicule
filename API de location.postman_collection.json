@@ -1,0 +1,4360 @@
+{
+	"info": {
+		"_postman_id": "c4dd33e9-dcd0-4a2b-845a-6007a6fb3da3",
+		"name": "API de location",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45206841",
+		"_collection_link": "https://simon-7797225.postman.co/workspace/Simon_API~6b67a6d2-97c8-4a57-a60a-19c00731e278/collection/45206841-c4dd33e9-dcd0-4a2b-845a-6007a6fb3da3?action=share&source=collection_link&creator=45206841"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "getUsers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Le statut est 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"La réponse est du JSON\", function () {\r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.be.json;\r",
+									"})\r",
+									"\r",
+									"pm.test(\"La réponse est un tableau\", function () {\r",
+									"    pm.expect(pm.response.json()).to.be.an(\"array\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/utilisateurs",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"utilisateurs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"is JSON\", function(){\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"if (jsonData != null)\r",
+									"{\r",
+									"    pm.collectionVariables.set(\"id_user\", jsonData.id);\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"message d'erreur correct\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"Utilisateur créé avec succès\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nom\": \"NomTEST\",\r\n  \"prenom\": \"prenomTEST\",\r\n  \"email\": \"emailTEST@test.com\",\r\n  \"mot_de_passe\": \"TEST123\",\r\n  \"adresse\": \"rue du test\",\r\n  \"code_postal\": \"75000\",\r\n  \"ville\": \"Paris\",\r\n  \"pays\": \"France\",\r\n  \"telephone\": \"0001020304\",\r\n  \"date_naissance\": \"2025-01-01\",\r\n  \"permis_conduire\": \"oui\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/utilisateurs",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"utilisateurs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUserByID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/utilisateurs/{{id_user}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"utilisateurs",
+								"{{id_user}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUserByID_404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/utilisateurs/9999",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"utilisateurs",
+								"9999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addUser_400",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Données invalides\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n                    \"nom\": \"FLORINO\",\r\n                    \"prenom\": \"Simon\",\r\n                    \"email\": \"\",\r\n                    \"mot_de_passe\": \"kikoo\",\r\n                    \"adresse\": \"57 avenue Larbi\",\r\n                    \"code_postal\": \"69001\",\r\n                    \"ville\": \"Lyon\",\r\n                    \"pays\": \"FRANCE\",\r\n                    \"telephone\": \"0606060606\",\r\n                    \"date_naissance\": \"1990-01-01\",\r\n                    \"permis_conduire\": \"1234567890\"\r\n                  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/utilisateurs",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"utilisateurs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modifyUserByID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nom\": \"TESTNom\",\r\n  \"prenom\": \"TESTprenom\",\r\n  \"email\": \"TESTemail@test.com\",\r\n  \"mot_de_passe\": \"123TEST\",\r\n  \"adresse\": \"rue du test logiciel\",\r\n  \"code_postal\": \"75000\",\r\n  \"ville\": \"Paris\",\r\n  \"pays\": \"France\",\r\n  \"telephone\": \"0403020100\",\r\n  \"date_naissance\": \"2022-02-02\",\r\n  \"permis_conduire\": \"non\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/utilisateurs/{{id_user}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"utilisateurs",
+								"{{id_user}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modifyUserByID_400",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nom\": \"FLORINO 2\",\r\n    \"prenom\": \"\",\r\n    \"email\": \"s.florinoit-students.fr\",\r\n    \"mot_de_passe\": \"password123\",\r\n    \"adresse\": \"123 Main Street\",\r\n    \"code_postal\": \"12345\",\r\n    \"ville\": \"Anytown\",\r\n    \"pays\": \"USA\",\r\n    \"telephone\": \"555-123-4567\",\r\n    \"date_naissance\": \"1990-01-01\",\r\n    \"permis_conduire\": \"1234567890\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/utilisateurs/{{id_user}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"utilisateurs",
+								"{{id_user}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modifyUserByID_404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Aucun utilisateur trouvé avec cet ID.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n                    \"nom\": \"FLORINO 2\",\r\n                    \"prenom\": \"Simon 2\",\r\n                    \"email\": \"s.florino@it-students.fr\",\r\n                    \"mot_de_passe\": \"password123\",\r\n                    \"adresse\": \"123 Main Street\",\r\n                    \"code_postal\": \"12345\",\r\n                    \"ville\": \"Anytown\",\r\n                    \"pays\": \"USA\",\r\n                    \"telephone\": \"555-123-4567\",\r\n                    \"date_naissance\": \"1990-01-01\",\r\n                    \"permis_conduire\": \"1234567890\"\r\n                  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/utilisateurs/9999",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"utilisateurs",
+								"9999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUserByID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'Utilisateur supprimé avec succès'\", function () {\r",
+									"    pm.expect(pm.response.json().message).to.eql('Utilisateur supprimé avec succès');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "file",
+							"file": {
+								"src": ""
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/utilisateurs/{{id_user}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"utilisateurs",
+								"{{id_user}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUserByID_404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct'\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Aucun utilisateur trouvé avec cet ID.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "file",
+							"file": {
+								"src": ""
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/utilisateurs/9999",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"utilisateurs",
+								"9999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUserByID_500",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Erreur lors de la suppression de l'utilisateur. Veuillez réessayer plus tard.\")\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "file",
+							"file": {
+								"src": ""
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/utilisateurs/15",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"utilisateurs",
+								"15"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "getCategories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/categories",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addCategory",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"id_category\", jsonData.id);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"nom\": \"Florino's Category\",\r\n            \"description\": \"Simon et sa clique\",\r\n            \"prix_journalier\": 60.61,\r\n            \"image\": \"biboo.jpg\"\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/categories",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addCategory_400",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Données invalides\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Simon et sa clique\",\r\n    \"prix_journalier\": 60.61,\r\n    \"image\": \"biboo.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/categories",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addCategory_500",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Erreur : Une catégorie avec ce nom existe déjà.\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"nom\": \"Florino's Category\",\r\n            \"description\": \"Simon et sa clique\",\r\n            \"prix_journalier\": 60.61,\r\n            \"image\": \"biboo.jpg\"\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/categories",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCategoryByID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/categories/{{id_category}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"categories",
+								"{{id_category}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCategoryByID_404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);    \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Error message is correct\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.error).to.equal(\"Aucune catégorie trouvée avec cet ID.\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/categories/9999",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"categories",
+								"9999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modifyCategoryByID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur\", function () {\r",
+									"    pm.expect(pm.response.json().message).to.include(\"Catégorie mise à jour avec succès\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n            \"nom\": \"Florino's Cat changed t\",\r\n            \"description\": \"Nouvelle description\",\r\n            \"prix_journalier\": 0.1\r\n            // ... autres champs à modifier ...\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/categories/{{id_category}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"categories",
+								"{{id_category}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modifyCategoryByID_400",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur\", function () {\r",
+									"    pm.expect(pm.response.json().details.prix_journalier).to.eql(\"Le prix journalier doit être un nombre positif.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n            \"nom\": \"Florino's Cat changed t\",\r\n            \"description\": \"Nouvelle description\",\r\n            \"prix_journalier\": -1\r\n            // ... autres champs à modifier ...\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/categories/{{id_category}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"categories",
+								"{{id_category}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modifyCategoryByID_404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Aucune catégorie trouvée avec cet ID.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n            \"nom\": \"Florino's Cat changed t\",\r\n            \"description\": \"Nouvelle description\",\r\n            \"prix_journalier\": 0.1\r\n            // ... autres champs à modifier ...\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/categories/9999",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"categories",
+								"9999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modifyCategoryByID_500",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Erreur : Une catégorie avec ce nom existe déjà.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n            \"nom\": \"Citadine\",\r\n            \"description\": \"Nouvelle description\",\r\n            \"prix_journalier\": 0.1\r\n            // ... autres champs à modifier ...\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/categories/{{id_category}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"categories",
+								"{{id_category}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteCategoryByID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/categories/{{id_category}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"categories",
+								"{{id_category}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteCategoryByID_404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Aucune catégorie trouvée avec cet ID.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/categories/9999",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"categories",
+								"9999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteCategoryByID_500",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Erreur : Impossible de supprimer la catégorie. Des véhicules y sont associés.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/categories/1",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"categories",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vehicules",
+			"item": [
+				{
+					"name": "getVehicules",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/vehicules",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"vehicules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addVehicule",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"id_vehicle\", jsonData.id);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_categorie\": 2,\r\n    \"marque\": \"simon's car\",\r\n    \"modele\": \"nerd\",\r\n    \"annee\": 2025,\r\n    \"immatriculation\": \"CD-1337-NET\",\r\n    \"kilometrage\": 1,\r\n    \"nombre_places\": 10,\r\n    \"climatisation\": true,\r\n    \"gps\": true,\r\n    \"transmission\": \"Automatique\",\r\n    \"carburant\": \"Diesel\",\r\n    \"disponible\": true,\r\n    \"image\": \"mySimonsCar.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/vehicules",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"vehicules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addVehicule_400",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().details.id_categorie).to.eql(\"L'ID de la catégorie est requis.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"marque\": \"simon's car\",\r\n    \"modele\": \"nerd\",\r\n    \"annee\": 2025,\r\n    \"immatriculation\": \"CD-1337-NET\",\r\n    \"kilometrage\": 1,\r\n    \"nombre_places\": 10,\r\n    \"climatisation\": true,\r\n    \"gps\": true,\r\n    \"transmission\": \"Automatique\",\r\n    \"carburant\": \"Diesel\",\r\n    \"disponible\": true,\r\n    \"image\": \"mySimonsCar.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/vehicules",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"vehicules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addVehicule_500",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Erreur : Un véhicule avec cette immatriculation existe déjà.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_categorie\": 2,\r\n    \"marque\": \"simon's car\",\r\n    \"modele\": \"nerd\",\r\n    \"annee\": 2025,\r\n    \"immatriculation\": \"CD-1337-NET\",\r\n    \"kilometrage\": 1,\r\n    \"nombre_places\": 10,\r\n    \"climatisation\": true,\r\n    \"gps\": true,\r\n    \"transmission\": \"Automatique\",\r\n    \"carburant\": \"Diesel\",\r\n    \"disponible\": true,\r\n    \"image\": \"mySimonsCar.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/vehicules",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"vehicules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getVehiculesByID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/vehicules/{{id_vehicle}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"vehicules",
+								"{{id_vehicle}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getVehiculesByID_404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Aucun véhicule trouvé avec cet ID.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/vehicules/0",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"vehicules",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modifyVehiculeByID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n            {\r\n            \"id_categorie\": 3,\r\n            \"marque\": \"Simon's car\",\r\n            \"modele\": \"nl\",\r\n            \"annee\": 2025,\r\n            \"immatriculation\": \"GE-1337-EK\",\r\n            \"kilometrage\": 2,\r\n            \"nombre_places\": 8,\r\n            \"climatisation\": true,\r\n            \"gps\": true,\r\n            \"transmission\": \"Automatique\",\r\n            \"carburant\": \"Diesel\",\r\n            \"disponible\": true,\r\n            \"image\": \"mySimonsCar.jpg\"\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/vehicules/{{id_vehicle}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"vehicules",
+								"{{id_vehicle}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modifyVehiculeByID_400",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().details.kilometrage).to.eql(\"Le kilométrage est invalide.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n            {\r\n            \"id_categorie\": 3,\r\n            \"marque\": \"Simon's car\",\r\n            \"modele\": \"nl\",\r\n            \"annee\": 2025,\r\n            \"immatriculation\": \"GE-1337-EK\",\r\n            \"kilometrage\": -1,\r\n            \"nombre_places\": 8,\r\n            \"climatisation\": true,\r\n            \"gps\": true,\r\n            \"transmission\": \"Automatique\",\r\n            \"carburant\": \"Diesel\",\r\n            \"disponible\": true,\r\n            \"image\": \"mySimonsCar.jpg\"\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/vehicules/{{id_vehicle}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"vehicules",
+								"{{id_vehicle}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modifyVehiculeByID_404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Aucun véhicule trouvé avec cet ID.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n            {\r\n            \"id_categorie\": 3,\r\n            \"marque\": \"Simon's car\",\r\n            \"modele\": \"nl\",\r\n            \"annee\": 2025,\r\n            \"immatriculation\": \"GE-1337-EK\",\r\n            \"kilometrage\": 1,\r\n            \"nombre_places\": 8,\r\n            \"climatisation\": true,\r\n            \"gps\": true,\r\n            \"transmission\": \"Automatique\",\r\n            \"carburant\": \"Diesel\",\r\n            \"disponible\": true,\r\n            \"image\": \"mySimonsCar.jpg\"\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/vehicules/0",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"vehicules",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modifyVehiculeByID_500",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Erreur : Un véhicule avec cette immatriculation existe déjà.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n            {\r\n            \"id_categorie\": 3,\r\n            \"marque\": \"Simon's car\",\r\n            \"modele\": \"nl\",\r\n            \"annee\": 2025,\r\n            \"immatriculation\": \"AA-123-BB\",\r\n            \"kilometrage\": 1,\r\n            \"nombre_places\": 8,\r\n            \"climatisation\": true,\r\n            \"gps\": true,\r\n            \"transmission\": \"Automatique\",\r\n            \"carburant\": \"Diesel\",\r\n            \"disponible\": true,\r\n            \"image\": \"mySimonsCar.jpg\"\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/vehicules/{{id_vehicle}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"vehicules",
+								"{{id_vehicle}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteVehiculeByID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/vehicules/{{id_vehicle}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"vehicules",
+								"{{id_vehicle}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteVehiculeByID_404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Aucun véhicule trouvé avec cet ID.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/vehicules/0",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"vehicules",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteVehiculeByID_500",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Erreur lors de la suppression du véhicule. Veuillez réessayer plus tard.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/vehicules/2",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"vehicules",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Agences",
+			"item": [
+				{
+					"name": "getAgencies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/agences",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"agences"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addAgency",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"id_agency\", jsonData.id);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"nom\": \"Chez Simon\",\r\n            \"adresse\": \"1337 rue de la ref\",\r\n            \"code_postal\": \"69000\",\r\n            \"ville\": \"Lyon\",\r\n            \"pays\": \"France\"\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/agences",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"agences"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addAgency_400",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().details.nom).to.eql(\"Le nom est requis.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"adresse\": \"1337 rue de la ref\",\r\n            \"code_postal\": \"69000\",\r\n            \"ville\": \"Lyon\",\r\n            \"pays\": \"France\"\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/agences",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"agences"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addAgency_500",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"nom\": \"Chez Simon\",\r\n            \"adresse\": \"1337 rue de la ref\",\r\n            \"code_postal\": \"69000\",\r\n            \"ville\": \"Lyon\",\r\n            \"pays\": \"France\"\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/agences",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"agences"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAgencyByID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/agences/{{id_agency}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"agences",
+								"{{id_agency}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAgencyByID_404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Aucune agence trouvée avec cet ID.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/agences/0",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"agences",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modifyAgenciesByID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"nom\": \"Chez le Sim\",\r\n            \"adresse\": \"1337 rue de la science\",\r\n            \"code_postal\": \"69520\",\r\n            \"ville\": \"Grigny\",\r\n            \"pays\": \"France\"\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/agences/{{id_agency}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"agences",
+								"{{id_agency}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modifyAgenciesByID_400",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"nom\": \"Chez le Sim\",\r\n            \"adresse\": \"1337 rue de la science\",\r\n            \"code_postal\": \"abc\",\r\n            \"ville\": \"Grigny\",\r\n            \"pays\": \"France\"\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/agences/{{id_agency}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"agences",
+								"{{id_agency}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modifyAgenciesByID_404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Aucune agence trouvée avec cet ID.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"nom\": \"Chez le Sim\",\r\n            \"adresse\": \"1337 rue de la science\",\r\n            \"code_postal\": \"69520\",\r\n            \"ville\": \"Grigny\",\r\n            \"pays\": \"France\"\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/agences/0",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"agences",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modifyAgenciesByID_500",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"nom\": \"Chez le Sim\",\r\n            \"adresse\": \"1337 rue de la science\",\r\n            \"code_postal\": \"69520\",\r\n            \"ville\": \"Grigny\",\r\n            \"pays\": \"France\"\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/agences/27",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"agences",
+								"27"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAgenciesByID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/agences/{{id_agency}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"agences",
+								"{{id_agency}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAgenciesByID_404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Aucune agence trouvée avec cet ID.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/agences/0",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"agences",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAgenciesByID_500",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Erreur : Impossible de supprimer l'agence. Des éléments y sont associés (véhicules, locations, etc.).\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/agences/1",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"agences",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Disponibilités",
+			"item": [
+				{
+					"name": "getDispo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/disponibilites",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"disponibilites"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addDispo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.collectionVariables.set(\"id_dispo\", jsonData.id);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"id_vehicule\": {{id_vehicle}},\r\n            \"id_agence\": {{id_agency}},\r\n            \"quantite\": 2\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/disponibilites",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"disponibilites"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addDispo_400",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);    \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Données invalides\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_vehicule\": 0,\r\n    \"id_agence\": 0,\r\n    \"quantite\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/disponibilites",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"disponibilites"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addDispo_500",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Erreur : Vérifiez que l'ID du véhicule et l'ID de l'agence existent.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"id_vehicule\": 999,\r\n            \"id_agence\": 999,\r\n            \"quantite\": 2\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/disponibilites",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"disponibilites"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDispoByID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/disponibilites/{{id_dispo}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"disponibilites",
+								"{{id_dispo}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDispoByID_404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/disponibilites/0",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"disponibilites",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modifyDispoByID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_vehicule\": {{id_vehicle}},\r\n    \"id_agence\": {{id_agency}},\r\n    \"quantite\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/disponibilites/{{id_dispo}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"disponibilites",
+								"{{id_dispo}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modifyDispoByID_400",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur\", function () {\r",
+									"    pm.expect(pm.response.json().details.quantite).to.eql(\"La quantité doit être un entier positif.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_vehicule\": {{id_vehicle}},\r\n    \"id_agence\": {{id_agency}},\r\n    \"quantite\": -1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/disponibilites/{{id_dispo}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"disponibilites",
+								"{{id_dispo}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modifyDispoByID_404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"id_vehicule\": 5,\r\n            \"id_agence\": 1,\r\n            \"quantite\": 1\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/disponibilites/0",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"disponibilites",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modifyDispoByID_500",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"id_vehicule\": 9999,\r\n            \"id_agence\": 9999,\r\n            \"quantite\": 1\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/disponibilites/{{id_dispo}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"disponibilites",
+								"{{id_dispo}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteDispoByID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().message).to.eql(\"Disponibilité supprimée avec succès\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/disponibilites/{{id_dispo}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"disponibilites",
+								"{{id_dispo}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteDispoByID_404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Aucune disponibilité trouvée avec cet ID.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/disponibilites/0",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"disponibilites",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteDispoByID_405",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 405\", function () {\r",
+									"    pm.response.to.have.status(405);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/disponibilites/1.4",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"disponibilites",
+								"1.4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteDispoByID_500",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"\r",
+									"// pm.test(\"Message d'erreur correct\", function () {\r",
+									"//     pm.expect(pm.response.json().error).to.eql(\"Aucune disponibilité trouvée avec cet ID.\");\r",
+									"// });"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/disponibilites/1",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"disponibilites",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Locations",
+			"item": [
+				{
+					"name": "getLocations",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/locations",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"locations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addLocation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"id_location\", jsonData.id);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"id_utilisateur\": 1,\r\n            \"id_vehicule\": 1,\r\n            \"id_agence_depart\": 1,\r\n            \"id_agence_retour\": 3,\r\n            \"date_debut\": \"2023-05-20\",\r\n            \"date_fin\": \"2027-05-27\",\r\n            \"prix_total\": 560.00,\r\n            \"statut\": \"Confirmée\"\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/locations",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"locations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addLocation_400",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Données invalides\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"id_utilisateur\": 0,\r\n            \"id_vehicule\": 0,\r\n            \"id_agence_depart\": 1,\r\n            \"id_agence_retour\": 3,\r\n            \"date_debut\": \"2023-05-20\",\r\n            \"date_fin\": \"2023-05-27\",\r\n            \"prix_total\": 560.00,\r\n            \"statut\": \"Confirmée\"\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/locations",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"locations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addLocation_500",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Erreur : Vérifiez que les IDs (utilisateur, véhicule, agences) existent.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"id_utilisateur\": 9999,\r\n            \"id_vehicule\": 9999,\r\n            \"id_agence_depart\": 1,\r\n            \"id_agence_retour\": 3,\r\n            \"date_debut\": \"2023-05-20\",\r\n            \"date_fin\": \"2023-05-27\",\r\n            \"prix_total\": 560.00,\r\n            \"statut\": \"Confirmée\"\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/locations",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"locations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getLocationByID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"id_utilisateur\": 10,\r\n            \"id_vehicule\": 8,\r\n            \"id_agence_depart\": 1,\r\n            \"id_agence_retour\": 3,\r\n            \"date_debut\": \"2023-05-20\",\r\n            \"date_fin\": \"2023-05-27\",\r\n            \"prix_total\": 560.00,\r\n            \"statut\": \"Confirmée\"\r\n          }"
+						},
+						"url": {
+							"raw": "{{url_location_website}}/locations/{{id_location}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"locations",
+								"{{id_location}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getLocationByID_404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Aucune location trouvée avec cet ID.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url_location_website}}/locations/0",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"locations",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modifyLocationByID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"id_utilisateur\": 1,\r\n            \"id_vehicule\": 1,\r\n            \"id_agence_depart\": 2,\r\n            \"id_agence_retour\": 3,\r\n            \"date_debut\": \"2023-05-30\",\r\n            \"date_fin\": \"2023-06-27\",\r\n            \"prix_total\": 10000,\r\n            \"statut\": \"Accidenté\"\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/locations/{{id_location}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"locations",
+								"{{id_location}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modifyLocationByID_400",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Données invalides\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"id_utilisateur\": 0,\r\n            \"id_vehicule\": 0,\r\n            \"id_agence_depart\": 2,\r\n            \"id_agence_retour\": 3,\r\n            \"date_debut\": \"2023-05-30\",\r\n            \"date_fin\": \"2023-06-27\",\r\n            \"prix_total\": 10000,\r\n            \"statut\": \"Accidenté\"\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/locations/{{id_location}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"locations",
+								"{{id_location}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modifyLocationByID_404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Aucune location trouvée avec cet ID.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"id_utilisateur\": 1,\r\n            \"id_vehicule\": 1,\r\n            \"id_agence_depart\": 2,\r\n            \"id_agence_retour\": 3,\r\n            \"date_debut\": \"2023-05-30\",\r\n            \"date_fin\": \"2023-06-27\",\r\n            \"prix_total\": 10000,\r\n            \"statut\": \"Accidenté\"\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/locations/0",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"locations",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modifyLocationByID_500",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Erreur : Vérifiez que les IDs (utilisateur, véhicule, agences) existent.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"id_utilisateur\": 9999,\r\n            \"id_vehicule\": 9999,\r\n            \"id_agence_depart\": 2,\r\n            \"id_agence_retour\": 3,\r\n            \"date_debut\": \"2023-05-30\",\r\n            \"date_fin\": \"2023-06-27\",\r\n            \"prix_total\": 10000,\r\n            \"statut\": \"Accidenté\"\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/locations/{{id_location}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"locations",
+								"{{id_location}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteLocationByID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/locations/{{id_location}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"locations",
+								"{{id_location}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteLocationByID_404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Aucune location trouvée avec cet ID.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/locations/0",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"locations",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteLocationByID_500",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/locations/{{id_location}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"locations",
+								"{{id_location}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Avis",
+			"item": [
+				{
+					"name": "getAvis",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/avis",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"avis"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addAvis",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"if (jsonData != null)\r",
+									"{\r",
+									"    pm.collectionVariables.set(\"id_avis\", jsonData.id);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"id_location\": 5,\r\n            \"note\": 5,\r\n            \"commentaire\": \"Excellent service! Je reviendrai.\"\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/avis",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"avis"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addAvis_400",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Données invalides\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"id_location\": 0,\r\n            \"note\": 5,\r\n            \"commentaire\": \"Excellent service! Je reviendrai.\"\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/avis",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"avis"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addAvis_500",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Erreur : Vérifiez que l'ID de la location existe.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"id_location\": 9999,\r\n            \"note\": 5,\r\n            \"commentaire\": \"Excellent service! Je reviendrai.\"\r\n          }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_location_website}}/avis",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"avis"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAvisByID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/avis/{{id_avis}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"avis",
+								"{{id_avis}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAvisByID_404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Aucun avis trouvé avec cet ID.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/avis/0",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"avis",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAvisByID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/avis/{{id_avis}}",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"avis",
+								"{{id_avis}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAvisByID_404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message d'erreur correct\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql(\"Aucun avis trouvé avec cet ID.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/avis/0",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"avis",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAvisByID_500",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url_location_website}}/avis/0",
+							"host": [
+								"{{url_location_website}}"
+							],
+							"path": [
+								"avis",
+								"0"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"pm.test(\"Pas d'erreur PHP\", function () {\r",
+					"    pm.expect(pm.response.text()).to.not.include(\"Fatal error\");\r",
+					"});"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id_user",
+			"value": ""
+		},
+		{
+			"key": "id_category",
+			"value": ""
+		},
+		{
+			"key": "id_vehicle",
+			"value": ""
+		},
+		{
+			"key": "id_agency",
+			"value": ""
+		},
+		{
+			"key": "id_dispo",
+			"value": ""
+		},
+		{
+			"key": "id_location",
+			"value": ""
+		},
+		{
+			"key": "id_avis",
+			"value": ""
+		},
+		{
+			"key": "url_location_website",
+			"value": "http://10.21.6.31:81/API",
+			"type": "default"
+		}
+	]
+}
